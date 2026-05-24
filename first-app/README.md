@@ -34,3 +34,45 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+<!--  -->
+
+## here we will learn about first react app creation and static routes
+
+ Static Routes
+A static route in Next.js is created by adding a file with a fixed name inside the pages/ or app/ directory, which automatically maps to a URL.
+
+Example: We create a file in the pages directory named index.js.
+
+// pages/index.js
+
+```bash
+const Home = () => { 
+    return(
+        <div>
+            Home Page
+        </div>
+    );
+}
+
+```bash
+export default Home;
+It could be accessed by going to http://localhost:3000/
+
+2. Nested Routes
+A nested route in Next.js is created by placing a file inside a subfolder, which maps to a hierarchical URL path automatically.
+
+Example: Create a new folder named users and add a file called about.js inside it.
+
+// pages/user/about.js
+
+const About = () => { 
+    return(
+        <div>
+            About Page
+        </div>
+    );
+}
+export default About;
+We can access this file by visiting http://localhost:3000/users/about.

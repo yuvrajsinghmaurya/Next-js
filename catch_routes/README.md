@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Catch-All Routes in Next.js
 
-## Getting Started
+This project demonstrates how to create a catch-all route in Next.js using the App Router.
 
-First, run the development server:
+The catch-all route is created inside:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```txt
+app/[...filePath]/page.tsx
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What Is a Catch-All Route?
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+A catch-all route is used when you want one page to handle multiple dynamic URL segments.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+For example, this single route can handle URLs like:
 
-## Learn More
+```txt
+/about
+/docs
+/docs/react
+/docs/react/hooks
+/folder/subfolder/file
+```
 
-To learn more about Next.js, take a look at the following resources:
+All of these URLs are matched by `[...filePath]`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Route File
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```tsx
+export default async function File({ params }: { params: string[] }) {
+  console.log(await params);
 
-## Deploy on Vercel
+  const { filePath } = await params;
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  return (
+    <div>
+      File {filePath.join("/")}
+    </div>
+  );
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## How It Works
+
+In Next.js, square brackets are used for dynamic routes.
+
+```txt
+[...filePath]
+```
+
+The three dots `...` make it a catch-all route. This means Next.js will collect all matching URL parts and store them inside the `filePath` parameter as an array.
+
+Example:
+
+```txt
+URL: /docs/react/hooks
+```
+
+The `filePath` value will be:
+
+```ts
+["docs", "react", "hooks"]
+```
+
+Then this line joins the array into a readable path:
+
+```tsx
+filePath.join("/")
+```
+
+Output:
+
+```txt
+docs/react/hooks
+```
+
+So the page displays:
+
+```txt
+File docs/react/hooks
+```
+
+## Run the Project
+
+Install dependencies:
+
+```bash
+pnpm install
+```
+
+Start the development server:
+
+```bash
+pnpm dev
+```
+
+Open the app in your browser:
+
+```txt
+http://localhost:3000
+```
+
+Then test different routes:
+
+```txt
+http://localhost:3000/about
+http://localhost:3000/docs/react
+http://localhost:3000/folder/subfolder/file
+```
+
+## Important Note
+
+This route catches one or more path segments. That means `/about` works, but the home route `/` is not handled by `[...filePath]`.
+
+To also catch the home route, use an optional catch-all route:
+
+```txt
+app/[[...filePath]]/page.tsx
+```
+
+## Summary
+
+This project shows how to:
+
+- Create a catch-all route in Next.js.
+- Read multiple URL segments from `params`.
+- Display the complete dynamic path on the page.

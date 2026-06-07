@@ -1,3 +1,9 @@
+// meta data 
+
+export const metadata:Metadata={
+    title:'services technical agency'
+}
+
 export default function(){
     return(
         <div>

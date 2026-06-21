@@ -6,7 +6,9 @@ type BlogProps = {
 
 
 
-// for ssg rendring 
+// for IRG rendring 
+//  here we will use a varibale called export const revalidate = time 
+export const revalidate = 5 // here five is second that means every 5 second it will regebrate the page 
 export async function generateStaticParams() {
   // return [
   //   { blogID: '1' },
@@ -49,6 +51,7 @@ export default async function Blog({ params }: BlogProps) {
         <p className="text-2xl text-gray-700">
           Blog ID: <span className="font-semibold">{blogID}</span>
           <h2>{todo.title}</h2>
+          <h1>{new Date().toLocaleTimeString()}</h1>
         </p>
       </div>
     </div>
